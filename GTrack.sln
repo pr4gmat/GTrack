@@ -38,6 +38,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GTrack.Station.Client", "li
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GTrack.Control.Desktop", "src\GTrack.Control.Desktop\GTrack.Control.Desktop.csproj", "{AF2AD5D3-5FBB-4821-A3AB-B357FE6ABD90}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GTrack.Node.Desktop", "src\GTrack.Node.Desktop\GTrack.Node.Desktop.csproj", "{332484DC-A4D7-452C-98C9-87F2C8537669}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,7 @@ Global
 		{03CF6E13-943E-48AC-B4FD-1233695907F2} = {E329053B-52F4-4B37-AEA7-210467CA07EA}
 		{2B50D034-54A0-4DF8-9619-AC773DE7F00E} = {F2FBE261-BE76-4E49-BB53-04B8F1D5954E}
 		{AF2AD5D3-5FBB-4821-A3AB-B357FE6ABD90} = {E329053B-52F4-4B37-AEA7-210467CA07EA}
+		{332484DC-A4D7-452C-98C9-87F2C8537669} = {E329053B-52F4-4B37-AEA7-210467CA07EA}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{51F3E983-5E61-4225-91F8-AE143AF02DD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -111,5 +114,9 @@ Global
 		{AF2AD5D3-5FBB-4821-A3AB-B357FE6ABD90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF2AD5D3-5FBB-4821-A3AB-B357FE6ABD90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF2AD5D3-5FBB-4821-A3AB-B357FE6ABD90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{332484DC-A4D7-452C-98C9-87F2C8537669}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{332484DC-A4D7-452C-98C9-87F2C8537669}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{332484DC-A4D7-452C-98C9-87F2C8537669}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{332484DC-A4D7-452C-98C9-87F2C8537669}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
