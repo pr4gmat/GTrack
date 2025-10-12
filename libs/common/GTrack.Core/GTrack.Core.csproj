@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0-windows</TargetFramework>
+        <Nullable>enable</Nullable>
+        <UseWPF>true</UseWPF>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="GMap.NET.Core" Version="2.1.7" />
+      <PackageReference Include="Prism.Core" Version="9.0.537" />
+      <PackageReference Include="Prism.Events" Version="9.0.537" />
+      <PackageReference Include="WPF-UI" Version="4.0.3" />
+    </ItemGroup>
+
+</Project>
