@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net9.0-windows</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UseWPF>true</UseWPF>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\libs\clients\GTrack.Node.Client\GTrack.Node.Client.csproj" />
+      <ProjectReference Include="..\..\libs\common\GTrack.Core\GTrack.Core.csproj" />
+      <ProjectReference Include="..\..\libs\common\GTrack.Infrastructure\GTrack.Infrastructure.csproj" />
+      <ProjectReference Include="..\..\libs\servers\GTrack.Station.Server\GTrack.Station.Server.csproj" />
+      <ProjectReference Include="..\..\libs\sgp4\GTrack.SGP4\GTrack.SGP4.csproj" />
+      <ProjectReference Include="..\..\libs\ui\GTrack.Dialog.Module\GTrack.Dialog.Module.csproj" />
+      <ProjectReference Include="..\..\libs\ui\GTrack.ObserverMap.Module\GTrack.ObserverMap.Module.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Prism.DryIoc" Version="9.0.537" />
+      <PackageReference Include="Prism.Wpf" Version="9.0.537" />
+      <PackageReference Include="Serilog.Extensions.Logging" Version="9.0.3-dev-02320" />
+      <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
+      <PackageReference Include="WPF-UI" Version="4.0.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Assets\gtrack-logo.png" />
+      <Resource Include="Assets\gtrack-logo.png" />
+      <None Remove="Assets\gtrack-node-dark.png" />
+      <Resource Include="Assets\gtrack-node-dark.png" />
+      <None Remove="Assets\gtrack-node-light.png" />
+      <Resource Include="Assets\gtrack-node-light.png" />
+    </ItemGroup>
+
+</Project>

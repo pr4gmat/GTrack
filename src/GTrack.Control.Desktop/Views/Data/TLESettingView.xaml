@@ -1,0 +1,36 @@
+<UserControl x:Class="GTrack.Control.Desktop.Views.Data.TLESettingView" mc:Ignorable="d"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             Background="{DynamicResource ApplicationBackgroundBrush}"
+             Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+             d:DesignHeight="600" d:DesignWidth="1000">
+    <Grid Margin="25">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <TextBlock Text="TLE настройка"
+                   FontSize="24"
+                   FontWeight="Bold"/>
+        
+        <Grid Grid.Row="1" Margin="0,10,0,0">
+            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top">
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel>
+                        <TextBlock Text="Путь" Margin="0,0,0,5"/>
+                        <ui:TextBox Width="210" Text="{Binding TleFilePath, Mode=TwoWay}" IsReadOnly="True"/>
+                    </StackPanel>
+                </StackPanel>
+                <ui:Button Content="Загрузить"
+                           HorizontalAlignment="Center"
+                           Height="30" Width="210" 
+                           Margin="0,10,0,0"
+                           Command="{Binding LoadTleCommand}"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>
