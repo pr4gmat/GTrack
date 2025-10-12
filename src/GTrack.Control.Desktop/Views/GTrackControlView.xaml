@@ -1,0 +1,82 @@
+<UserControl x:Class="GTrack.Control.Desktop.Views.GTrackControlView" mc:Ignorable="d"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             Background="{DynamicResource ApplicationBackgroundBrush}"
+             Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+             d:DesignHeight="600" d:DesignWidth="1000">
+
+    <UserControl.Resources>
+        <Style x:Key="ServerStatusEllipseStyle" TargetType="Ellipse">
+            <Setter Property="Fill" Value="Red"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Status}" Value="True">
+                    <Setter Property="Fill" Value="Lime"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Status}" Value="False">
+                    <Setter Property="Fill" Value="Red"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Margin="25">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <StackPanel Orientation="Horizontal">
+            <ui:CardControl Header="Статус сервера Node" Margin="0,0,10,0"
+                            DataContext="{Binding NodeServer}">
+                <StackPanel Orientation="Horizontal">
+                    <Ellipse Height="15" Width="15" Style="{StaticResource ServerStatusEllipseStyle}" Margin="0,0,5,0"/>
+                </StackPanel>
+            </ui:CardControl>
+
+            <ui:CardControl Header="Статус сервера Houston" Margin="0,0,10,0"
+                            DataContext="{Binding HoustonServer}">
+                <StackPanel Orientation="Horizontal">
+                    <Ellipse Height="15" Width="15" Style="{StaticResource ServerStatusEllipseStyle}" Margin="0,0,5,0"/>
+                </StackPanel>
+            </ui:CardControl>
+        </StackPanel>
+        
+        <Grid Grid.Row="1" Margin="0,10,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Управление" FontWeight="Bold"
+                       Margin="0,5,0,0"/>
+            
+            <TextBlock Grid.Row="1" Text="Выбор управляемой GTrack-Station" Margin="0,5,0,0"/>
+
+            <ListBox Grid.Row="2"
+                     ItemsSource="{Binding Stations}"
+                     SelectedItem="{Binding SelectedStation, Mode=TwoWay}"
+                     DisplayMemberPath="Id"
+                     ScrollViewer.CanContentScroll="True"
+                     Margin="0,10,0,0"/>
+        </Grid>
+        
+        <StackPanel Grid.Row="2" Margin="0,10,0,0">
+            <Button Content="Принять"
+                    Command="{Binding ApplyCommand}"
+                    HorizontalAlignment="Center"
+                    Height="30" Width="200"/>
+            
+            <TextBlock Text="Текущее наблюдение:" TextAlignment="Center"
+                       FontWeight="Bold" 
+                       Margin="0,5,0,0"/>
+            
+            <TextBlock Text="{Binding CurrentObservation}" 
+                       TextAlignment="Center" Margin="0,5,0,10"/>
+        </StackPanel>
+    </Grid>
+</UserControl>
