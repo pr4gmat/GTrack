@@ -1,0 +1,18 @@
+<UserControl x:Class="GTrack.Dialog.Module.Views.DialogMessageView" mc:Ignorable="d"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             Background="{DynamicResource ApplicationBackgroundBrush}"
+             Foreground="{DynamicResource TextFillColorPrimaryBrush}">
+    <Border Margin="10">
+        <StackPanel>
+            <TextBlock Text="{Binding Message}" 
+                       Margin="0 0 0 20"
+                       FontSize="16" TextWrapping="Wrap" MaxWidth="400"/>
+            <ui:Button Content="OK" Command="{Binding CloseDialogCommand}" 
+                       Width="80" HorizontalAlignment="Right"/>
+        </StackPanel>
+    </Border>
+</UserControl>
