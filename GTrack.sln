@@ -8,6 +8,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GTrack.Core", "libs\common\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GTrack.Infrastructure", "libs\common\GTrack.Infrastructure\GTrack.Infrastructure.csproj", "{0C5250DB-C47E-4121-8853-B01B086C7D63}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "clients", "clients", "{F2FBE261-BE76-4E49-BB53-04B8F1D5954E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GTrack.Node.Client", "libs\clients\GTrack.Node.Client\GTrack.Node.Client.csproj", "{DD5D079A-FEA1-46E4-AA20-1B5C2B0B90F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +21,8 @@ Global
 		{739405A0-D3D4-4A58-8E60-9598582B1B03} = {65EA669F-B401-4495-8AD8-CA19A6903316}
 		{51F3E983-5E61-4225-91F8-AE143AF02DD1} = {739405A0-D3D4-4A58-8E60-9598582B1B03}
 		{0C5250DB-C47E-4121-8853-B01B086C7D63} = {739405A0-D3D4-4A58-8E60-9598582B1B03}
+		{F2FBE261-BE76-4E49-BB53-04B8F1D5954E} = {65EA669F-B401-4495-8AD8-CA19A6903316}
+		{DD5D079A-FEA1-46E4-AA20-1B5C2B0B90F6} = {F2FBE261-BE76-4E49-BB53-04B8F1D5954E}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{51F3E983-5E61-4225-91F8-AE143AF02DD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -27,5 +33,9 @@ Global
 		{0C5250DB-C47E-4121-8853-B01B086C7D63}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C5250DB-C47E-4121-8853-B01B086C7D63}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C5250DB-C47E-4121-8853-B01B086C7D63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD5D079A-FEA1-46E4-AA20-1B5C2B0B90F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD5D079A-FEA1-46E4-AA20-1B5C2B0B90F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD5D079A-FEA1-46E4-AA20-1B5C2B0B90F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD5D079A-FEA1-46E4-AA20-1B5C2B0B90F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
