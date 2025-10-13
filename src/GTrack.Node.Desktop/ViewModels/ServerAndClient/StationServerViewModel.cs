@@ -20,7 +20,7 @@ public class StationServerViewModel : BindableBase, INavigationAware
     private readonly IDialogService _dialogService;
 
     // IP address to bind the server to / IP-адрес для привязки сервера
-    private string _ip = "127.0.0.1";
+    private string _ip;
     public string IP
     {
         get => _ip;
@@ -28,7 +28,7 @@ public class StationServerViewModel : BindableBase, INavigationAware
     } 
 
     // Port to bind the server / Порт для сервера
-    private int _port = 9000;
+    private int _port;
     public int Port
     {
         get => _port;
