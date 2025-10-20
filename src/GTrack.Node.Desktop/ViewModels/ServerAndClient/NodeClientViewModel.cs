@@ -73,13 +73,13 @@ public class NodeClientViewModel : BindableBase, INavigationAware
         {
             _eventAggregator.GetEvent<NodeClientConnectedEvent>().Publish();
             RaiseCommands();
-            ShowMessage("Подключение к серверу успешно / Connected to server successfully.");
+            ShowMessage("Подключение к серверу успешно");
         };
 
         _client.OnDisconnected += () =>
         {
             _eventAggregator.GetEvent<NodeClientDisconnectedEvent>().Publish();
-            ShowMessage("Отключение от сервера выполнено / Disconnected from server.");
+            ShowMessage("Отключение от сервера выполнено");
             RaiseCommands();
         };
 
@@ -106,7 +106,7 @@ public class NodeClientViewModel : BindableBase, INavigationAware
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "[Node client VM] Error processing message / Ошибка обработки сообщения");
+                _logger.LogError(ex, "[Node client VM] Ошибка обработки сообщения");
                 _eventAggregator.GetEvent<NodeClientCrashedEvent>().Publish(ex);
             }
         };
@@ -135,10 +135,15 @@ public class NodeClientViewModel : BindableBase, INavigationAware
         try
         {
             await _client.StartAsync(IP, Port);
+            _eventAggregator.GetEvent<NodeClientIPandPortEvent>().Publish(new Core.Models.Node
+            {
+                IP = this.IP,
+                Port = this.Port,
+            });
         }
         catch (Exception ex)
         {
-            ShowMessage("Ошибка подключения / Connection error: " + ex.Message);
+            ShowMessage("Ошибка подключения" + ex.Message);
         }
     }
 
@@ -167,8 +172,8 @@ public class NodeClientViewModel : BindableBase, INavigationAware
     {
         if (!IPAddress.TryParse(IP, out _))
         {
-            ShowMessage("Указан некорректный IP-адрес / Invalid IP address.");
-            _logger.LogWarning("[Node client VM] Invalid IP: {IP}", IP);
+            ShowMessage("Указан некорректный IP-адрес");
+            _logger.LogWarning("[Node client VM] Указан некорректный IP-адрес: {IP}", IP);
             return false;
         }
 
