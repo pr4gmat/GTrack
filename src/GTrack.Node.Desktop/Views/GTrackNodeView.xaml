@@ -29,17 +29,28 @@
         </Grid.RowDefinitions>
         
         <StackPanel Orientation="Horizontal">
-            <ui:CardControl Header="Статус клиента Node" Margin="0,0,10,0"
-                            DataContext="{Binding NodeClient}">
-                <StackPanel Orientation="Horizontal">
-                    <Ellipse Height="15" Width="15" Style="{StaticResource ServerStatusEllipseStyle}" Margin="0,0,5,0"/>
-                </StackPanel>
-            </ui:CardControl>
+            <StackPanel>
+                <ui:CardControl Header="Статус клиента Node" Margin="0,0,10,0"
+                                DataContext="{Binding NodeClient}">
+                    <StackPanel Orientation="Horizontal">
+                        <Ellipse Height="15" Width="15" Style="{StaticResource ServerStatusEllipseStyle}" Margin="0,0,5,0"/>
+                    </StackPanel>
+                </ui:CardControl>
 
-            <ui:CardControl Header="Статус сервера Station" Margin="0,0,10,0"
-                            DataContext="{Binding StationServer}">
-                <StackPanel Orientation="Horizontal">
-                    <Ellipse Height="15" Width="15" Style="{StaticResource ServerStatusEllipseStyle}" Margin="0,0,5,0"/>
+                <ui:CardControl Header="Статус сервера Station" Margin="0,5,10,0"
+                                DataContext="{Binding StationServer}">
+                    <StackPanel Orientation="Horizontal">
+                        <Ellipse Height="15" Width="15" Style="{StaticResource ServerStatusEllipseStyle}" Margin="0,0,5,0"/>
+                    </StackPanel>
+                </ui:CardControl>
+            </StackPanel>
+            
+            <ui:CardControl Header="Местоположение наблюдателя">
+                <StackPanel>
+                    <TextBlock Text="{Binding CurrentObserverLocation.Name, StringFormat=Имя: {0}}" />
+                    <TextBlock Text="{Binding CurrentObserverLocation.Latitude, StringFormat=Широта: {0:F6}}" />
+                    <TextBlock Text="{Binding CurrentObserverLocation.Longitude, StringFormat=Долгота: {0:F6}}" />
+                    <TextBlock Text="{Binding CurrentObserverLocation.Height, StringFormat=Высота: {0} m}" />
                 </StackPanel>
             </ui:CardControl>
         </StackPanel>

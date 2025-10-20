@@ -33,16 +33,14 @@ public class GTrackNodeViewModel : BindableBase, INavigationAware
         get => _nodeClient;
         set => SetProperty(ref _nodeClient, value);
     }
-
-    // Status of Station Server
-    // Статус Station Server
+    
     private ServerStatus _stationServer;
     public ServerStatus StationServer
     {
         get => _stationServer;
         set => SetProperty(ref _stationServer, value);
     }
-
+    
     // List of stations known to the node
     // Список станций, известных Node
     private ObservableCollection<Core.Models.Station> _stations = new();

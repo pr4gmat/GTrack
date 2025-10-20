@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Net;
+using GTrack.Core.Events.NodeClient;
 using GTrack.Core.Events.StationServer;
 using GTrack.Node.Client;
 using GTrack.Station.Server;
@@ -33,6 +34,22 @@ public class StationServerViewModel : BindableBase, INavigationAware
     {
         get => _port;
         set => SetProperty(ref _port, value);
+    }
+    
+    // IP address to bind the server to / IP-адрес для привязки сервера
+    private string _nodeIP;
+    public string NodeClientIP
+    {
+        get => _nodeIP;
+        set => SetProperty(ref _nodeIP, value);
+    } 
+
+    // Port to bind the server / Порт для сервера
+    private int _nodePort;
+    public int NodeClientPort
+    {
+        get => _nodePort;
+        set => SetProperty(ref _nodePort, value);
     }
 
     // List of connected stations / Список подключенных станций
@@ -92,6 +109,12 @@ public class StationServerViewModel : BindableBase, INavigationAware
             _eventAggregator.GetEvent<StationServerStationReceivedEvent>().Publish(station);
             Stations.Add(station);
         };
+        
+        _eventAggregator.GetEvent<NodeClientIPandPortEvent>().Subscribe(data =>
+        {
+            NodeClientIP = data.IP;
+            NodeClientPort = data.Port;
+        });
 
         // When a station disconnects / Когда станция отключается
         _server.OnStationDisconnected += station =>
@@ -126,16 +149,27 @@ public class StationServerViewModel : BindableBase, INavigationAware
     private async void OnStartServer()
     {
         if (!ValidateInputs()) return;
+        
+        if (string.IsNullOrEmpty(_client.NodeId))
+        {
+            ShowMessage("Сначала запустите Node Client / Start Node Client first.");
+            _logger.LogWarning("[Station server] Node Client не запущен / Node Client not started");
+            return;
+        }
 
+        if (IP == NodeClientIP && Port == NodeClientPort)
+        {
+            ShowMessage("Порт Station Server не должен совпадать с портом Node Client на одном IP / Server port must be different from Node Client port on the same IP.");
+            _logger.LogWarning("[Station server] Конфликт портов с Node Client / Port conflict with Node Client");
+            return;
+        }
+        
         if (!_server.IsRunning)
         {
             try
             {
-                if (!string.IsNullOrEmpty(_client.NodeId))
-                {
-                    _logger.LogInformation("[Station server] Попытка запуска сервера / Attempting to start server...");
-                    await _server.StartAsync(IPAddress.Parse(IP), Port, _client.NodeId);
-                }
+                _logger.LogInformation("[Station server] Попытка запуска сервера / Attempting to start server...");
+                await _server.StartAsync(IPAddress.Parse(IP), Port, _client.NodeId);
             }
             catch (Exception ex)
             {
