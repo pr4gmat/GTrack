@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using GMap.NET;
 using GTrack.Core.Events;
 using GTrack.Core.Models;
+using GTrack.Core.Services;
 using GTrack.Node.Desktop.Views;
 using Microsoft.Extensions.Logging;
 
@@ -17,6 +18,7 @@ public class ObserverMapViewModel : BindableBase, INavigationAware
     private readonly IRegionManager _regionManager;
     private readonly IDialogService _dialogService;
     private readonly IEventAggregator _eventAggregator;
+    private readonly IObserverLocationService _observerLocationService;
 
     /// <summary>
     /// Collection of observer locations.
@@ -49,12 +51,14 @@ public class ObserverMapViewModel : BindableBase, INavigationAware
     public DelegateCommand DelObserverLocationCommand { get; }
     
     public ObserverMapViewModel(ILogger<ObserverMapViewModel> logger, IRegionManager regionManager,
-        IDialogService dialogService, IEventAggregator eventAggregator)
+        IDialogService dialogService, IEventAggregator eventAggregator,
+        IObserverLocationService observerLocationService)
     {
         _logger = logger;   
         _regionManager = regionManager;
         _dialogService = dialogService;
         _eventAggregator = eventAggregator;
+        _observerLocationService = observerLocationService; 
         
         // Initialize commands and bind their CanExecute conditions
         // Инициализация команд и привязка условий CanExecute
@@ -70,7 +74,7 @@ public class ObserverMapViewModel : BindableBase, INavigationAware
     /// </summary>
     private void AddObserverLocation()
     {
-        _dialogService.ShowDialog(nameof(ObserverAddView), null, r =>
+        _dialogService.ShowDialog(nameof(ObserverAddView), null, async r =>
         {
             if (r.Result == ButtonResult.OK && r.Parameters.ContainsKey("observer"))
             {
@@ -83,6 +87,8 @@ public class ObserverMapViewModel : BindableBase, INavigationAware
                 PublishToMap();
                 
                 _eventAggregator.GetEvent<ObserverLocationAddedEvent>().Publish(newObs);
+                
+                await _observerLocationService.SaveAsync(ObserverLocations);
             }
         });
     }
@@ -100,7 +106,7 @@ public class ObserverMapViewModel : BindableBase, INavigationAware
     /// Deletes the selected observer location.
     /// Удаляет выбранную точку наблюдения.
     /// </summary>
-    private void DeleteObserverLocation()
+    private async void DeleteObserverLocation()
     {
         if (SelectedObserverLocation != null)
         {
@@ -111,6 +117,8 @@ public class ObserverMapViewModel : BindableBase, INavigationAware
             // Update map after deletion
             // Обновление карты после удаления точки
             PublishToMap();
+            _eventAggregator.GetEvent<ObserverLocationDeletedEvent>().Publish();
+            await _observerLocationService.SaveAsync(ObserverLocations);
         }
     }
 
@@ -137,9 +145,10 @@ public class ObserverMapViewModel : BindableBase, INavigationAware
     /// Navigates to the MapView when this ViewModel is navigated to.
     /// Навигация к MapView при переходе на этот ViewModel.
     /// </summary>
-    public void OnNavigatedTo(NavigationContext navigationContext)
+    public async void OnNavigatedTo(NavigationContext navigationContext)
     {
         _regionManager.RequestNavigate("ObserverMapRegion", "MapView");
+        ObserverLocations = await _observerLocationService.LoadAsync();
     }
 
     public bool IsNavigationTarget(NavigationContext navigationContext) => true;

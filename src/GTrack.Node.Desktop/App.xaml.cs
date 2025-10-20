@@ -64,6 +64,7 @@ public partial class App : PrismApplication
         // Core services / Основные сервисы
         containerRegistry.RegisterSingleton<IFileDialogService, FileDialogService>();
         containerRegistry.RegisterSingleton<ISatelliteObserver, SatelliteObserver>();
+        containerRegistry.RegisterSingleton<IObserverLocationService, ObserverLocationService>();
 
         // Node/Server services / Сервисы Node/Server
         containerRegistry.RegisterSingleton<IGTrackNodeClient, GTrackNodeClient>();

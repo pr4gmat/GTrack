@@ -3,6 +3,7 @@ using GTrack.Core.Events;
 using GTrack.Core.Events.NodeClient;
 using GTrack.Core.Events.StationServer;
 using GTrack.Core.Models;
+using GTrack.Core.Services;
 using GTrack.Node.Client;
 using GTrack.SGP4;
 using GTrack.Station.Server;
@@ -24,6 +25,7 @@ public class GTrackNodeViewModel : BindableBase, INavigationAware
     private readonly IGTrackStationServer _server;
     private readonly IGTrackNodeClient _client;
     private readonly ISatelliteObserver _satelliteObserver;
+    private readonly IObserverLocationService _observerLocationService;
 
     // Status of Node Client
     // Статус Node Client
@@ -93,7 +95,8 @@ public class GTrackNodeViewModel : BindableBase, INavigationAware
     public GTrackNodeViewModel(
         ILogger<GTrackNodeViewModel> logger, IEventAggregator eventAggregator, 
         IGTrackNodeClient client, IDialogService dialogService, 
-        ISatelliteObserver satelliteObserver, IGTrackStationServer server)
+        ISatelliteObserver satelliteObserver, IGTrackStationServer server,
+        IObserverLocationService observerLocationService)
     {
         _logger = logger;
         _eventAggregator = eventAggregator;
@@ -101,6 +104,7 @@ public class GTrackNodeViewModel : BindableBase, INavigationAware
         _client = client;
         _satelliteObserver = satelliteObserver;
         _server = server;
+        _observerLocationService = observerLocationService;
 
         NodeClient = new ServerStatus { Name = "Node", Status = false };
         StationServer = new ServerStatus { Name = "Houston", Status = false };
@@ -123,7 +127,19 @@ public class GTrackNodeViewModel : BindableBase, INavigationAware
             CurrentObserverLocation = observer;
             Task.Run(async () => await DataCounting());
         });
+        
+        _eventAggregator.GetEvent<ObserverLocationDeletedEvent>().Subscribe(() =>
+        {
+            _logger.LogInformation("[UI] Observer location deleted — clearing data / Точка наблюдения удалена — очищаем данные");
 
+            CurrentObserverLocation = null;
+
+            App.Current.Dispatcher.Invoke(() =>
+            {
+                ObservationParameters.Clear();
+            });
+        });
+        
         // Subscribe to Station Server events
         // Подписка на события Station Server
         _eventAggregator.GetEvent<StationServerStartedEvent>().Subscribe(() =>
@@ -224,7 +240,24 @@ public class GTrackNodeViewModel : BindableBase, INavigationAware
             _ => { });
     }
 
-    public void OnNavigatedTo(NavigationContext navigationContext) { }
+    public async void OnNavigatedTo(NavigationContext navigationContext)
+    {
+        try
+        {
+            var savedLocations = await _observerLocationService.LoadAsync();
+            if (savedLocations.Any())
+            {
+                CurrentObserverLocation = savedLocations.First();
+                _logger.LogInformation($"[UI] Загрузка сохранённой точки наблюдения: {CurrentObserverLocation.Name}");
+                Task.Run(async () => await DataCounting());
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Ошибка при загрузке точки наблюдения");
+        }
+    }
+
     public bool IsNavigationTarget(NavigationContext navigationContext) => true;
     public void OnNavigatedFrom(NavigationContext navigationContext) { }
 }
