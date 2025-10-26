@@ -8,12 +8,14 @@
              xmlns:gmap="clr-namespace:GMap.NET.MapProviders;assembly=GMap.NET.Core">
     <windowsPresentation:GMapControl
         x:Name="Map"
-        Zoom="{Binding Zoom}"
-        MinZoom="4"
-        MaxZoom="8"
+        Zoom="{Binding Zoom, Mode=TwoWay}"
+        MinZoom="2"
+        MaxZoom="18"
         CanDragMap="True"
         MouseWheelZoomEnabled="True"
-        MapProvider="{x:Static gmap:GoogleMapProvider.Instance}"
+        MouseWheelZoomType="MousePositionAndCenter"
+        MapProvider="{x:Static gmap:GoogleHybridMapProvider.Instance}"
         attached:GMapBindings.Center="{Binding Center}"
-        attached:GMapBindings.Markers="{Binding Markers}" />
+        attached:GMapBindings.Markers="{Binding Markers}"
+        attached:GMapBindings.SatelliteMarkers="{Binding SatelliteMarkers}"/>
 </UserControl>

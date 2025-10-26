@@ -17,4 +17,8 @@ public class SatelliteObservationResult
     public double Elevation { get; set; }
     public double Range { get; set; }
     public double Doppler { get; set; }
+    
+    public double Latitude { get; set; }
+    public double Longitude { get; set; }
+    public double Altitude { get; set; }
 }

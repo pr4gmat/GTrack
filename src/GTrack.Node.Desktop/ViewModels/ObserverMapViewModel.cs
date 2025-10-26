@@ -149,6 +149,11 @@ public class ObserverMapViewModel : BindableBase, INavigationAware
     {
         _regionManager.RequestNavigate("ObserverMapRegion", "MapView");
         ObserverLocations = await _observerLocationService.LoadAsync();
+        
+        if (ObserverLocations.Any())
+        {
+            PublishToMap();
+        }
     }
 
     public bool IsNavigationTarget(NavigationContext navigationContext) => true;

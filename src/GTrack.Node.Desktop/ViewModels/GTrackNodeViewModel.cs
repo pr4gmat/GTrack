@@ -208,27 +208,29 @@ public class GTrackNodeViewModel : BindableBase, INavigationAware
                         Range = $"{obs.Range:F2} km",
                         Doppler = $"{obs.Doppler:F2} Hz"
                     });
+
+                    // Публикуем позицию спутника на карту
+                    var satResult = new SatelliteObservationResult
+                    {
+                        Name = obs.Name,
+                        Latitude = obs.Latitude,
+                        Longitude = obs.Longitude,
+                        Altitude = obs.Altitude,
+                        Time = obs.Time,
+                        Azimuth = obs.Azimuth,
+                        Elevation = obs.Elevation,
+                        Range = obs.Range,
+                        Doppler = obs.Doppler
+                    };
+
+                    _eventAggregator.GetEvent<SatellitePositionUpdatedEvent>().Publish(satResult);
                 });
 
-                if (obs.Elevation > 0)
-                {
-                    string message =
-                        $"NSRD:{CurrentStation?.Id}" +
-                        $"|{obs.Time:HH:mm:ss} UTC" +
-                        $"|{obs.Name}" +
-                        $"|{obs.Azimuth:F2}°" +
-                        $"|{obs.Elevation:F2}°" +
-                        $"|{obs.Range:F2} km" +
-                        $"|{obs.Doppler:F2} Hz";
-
-                    await _server.BroadcastAsync(message);
-                }
-
-                await Task.Delay(1000); // Update every second / Обновление каждую секунду
+                await Task.Delay(1000);
             }
         }
     }
-
+    
     /// <summary>
     /// Shows a dialog message to the user.
     /// Показывает сообщение пользователю через диалоговое окно.

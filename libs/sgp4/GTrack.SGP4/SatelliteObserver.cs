@@ -2,6 +2,7 @@ using System.IO;
 using GTrack.Core.Models;
 using SGPdotNET.CoordinateSystem;
 using SGPdotNET.Observation;
+using SGPdotNET.Propagation;
 using SGPdotNET.TLE;
 using SGPdotNET.Util;
 
@@ -93,9 +94,18 @@ public class SatelliteObserver : ISatelliteObserver
             throw new KeyNotFoundException($"Satellite '{satelliteName}' not found.");
 
         var time = DateTime.UtcNow;
+
+        // 1. Сначала получаем позицию спутника в ECI через Sgp4
+        var sgp4 = new Sgp4(satellite.Tle);
+        var eciPosition = sgp4.FindPosition(time);
+
+        // 2. Переводим ECI → геодезические координаты
+        var geo = eciPosition.ToGeodetic();
+
+        // 3. Получаем наблюдение от GroundStation (азимут, высота, дальность)
         var observation = _groundStation.Observe(satellite, time);
 
-        double c = 299792.458; // Speed of light km/s / Скорость света км/с
+        double c = 299792.458; // Скорость света км/с
         double doppler = -(observation.RangeRate / c) * _txFrequencyHz;
 
         return new SatelliteObservationResult
@@ -105,7 +115,10 @@ public class SatelliteObserver : ISatelliteObserver
             Azimuth = observation.Azimuth.Degrees,
             Elevation = observation.Elevation.Degrees,
             Range = observation.Range,
-            Doppler = doppler
+            Doppler = doppler,
+            Latitude = geo.Latitude.Degrees,   // широта спутника
+            Longitude = geo.Longitude.Degrees, // долгота спутника
+            Altitude = geo.Altitude            // высота спутника в км
         };
     }
 }
