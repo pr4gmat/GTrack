@@ -40,6 +40,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GTrack.Control.Desktop", "s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GTrack.Node.Desktop", "src\GTrack.Node.Desktop\GTrack.Node.Desktop.csproj", "{332484DC-A4D7-452C-98C9-87F2C8537669}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{721B7BBD-B52C-4F23-A3BE-7DA3BDE8D4CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SatelliteCalculation", "test\SatelliteCalculation\SatelliteCalculation.csproj", "{273E9819-8F98-40A0-BA71-37A81935F4BE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,6 +68,7 @@ Global
 		{2B50D034-54A0-4DF8-9619-AC773DE7F00E} = {F2FBE261-BE76-4E49-BB53-04B8F1D5954E}
 		{AF2AD5D3-5FBB-4821-A3AB-B357FE6ABD90} = {E329053B-52F4-4B37-AEA7-210467CA07EA}
 		{332484DC-A4D7-452C-98C9-87F2C8537669} = {E329053B-52F4-4B37-AEA7-210467CA07EA}
+		{273E9819-8F98-40A0-BA71-37A81935F4BE} = {721B7BBD-B52C-4F23-A3BE-7DA3BDE8D4CF}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{51F3E983-5E61-4225-91F8-AE143AF02DD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -118,5 +123,9 @@ Global
 		{332484DC-A4D7-452C-98C9-87F2C8537669}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{332484DC-A4D7-452C-98C9-87F2C8537669}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{332484DC-A4D7-452C-98C9-87F2C8537669}.Release|Any CPU.Build.0 = Release|Any CPU
+		{273E9819-8F98-40A0-BA71-37A81935F4BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{273E9819-8F98-40A0-BA71-37A81935F4BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{273E9819-8F98-40A0-BA71-37A81935F4BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{273E9819-8F98-40A0-BA71-37A81935F4BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
