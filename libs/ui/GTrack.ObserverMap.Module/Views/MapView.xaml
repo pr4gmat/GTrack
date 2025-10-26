@@ -13,7 +13,7 @@
         MaxZoom="8"
         CanDragMap="True"
         MouseWheelZoomEnabled="True"
-        MapProvider="{x:Static gmap:GoogleMapProvider.Instance}"
+        MapProvider="{x:Static gmap:GoogleHybridMapProvider.Instance}"
         attached:GMapBindings.Center="{Binding Center}"
         attached:GMapBindings.Markers="{Binding Markers}" />
 </UserControl>
