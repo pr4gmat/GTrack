@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using GMap.NET;
 using GTrack.Core.Events;
+using GTrack.Core.Models;
 using GTrack.ObserverMap.Module.Services;
 
 namespace GTrack.ObserverMap.Module.ViewModels;
@@ -21,7 +22,7 @@ public class MapViewModel : BindableBase
         set => SetProperty(ref _center, value);
     }
 
-    private double _zoom = 4; // Current zoom level / Текущий уровень масштабирования
+    private double _zoom;
     public double Zoom
     {
         get => _zoom;
@@ -34,6 +35,8 @@ public class MapViewModel : BindableBase
     /// </summary>
     public ObservableCollection<PointLatLng> Markers { get; } = new();
 
+    public ObservableCollection<SatelliteObservationResult> SatelliteMarkers { get; } = new();
+    
     public MapViewModel(IMapCacheService cacheService, IEventAggregator eventAggregator)
     {
         _cacheService = cacheService;
@@ -41,11 +44,41 @@ public class MapViewModel : BindableBase
 
         _cacheService.UseOnlineWithCache(); // Enable online mode with cache / Включить онлайн режим с кешем
 
-        Zoom = 4; // Initial zoom / Начальный масштаб
+        Zoom = 1; // Initial zoom / Начальный масштаб
 
         // Subscribe to location updates / Подписка на обновления локаций
         _eventAggregator.GetEvent<ObserverLocationsUpdatedEvent>()
             .Subscribe(UpdateMarkers);
+        
+        _eventAggregator.GetEvent<SatellitePositionUpdatedEvent>().Subscribe(UpdateSatelliteMarker);
+    }
+    
+    private void UpdateSatelliteMarker(SatelliteObservationResult sat)
+    {
+        var existing = SatelliteMarkers.FirstOrDefault(m => m.Name == sat.Name);
+        if (existing == null)
+        {
+            SatelliteMarkers.Add(sat);
+        }
+        else
+        {
+            existing.Latitude = sat.Latitude;
+            existing.Longitude = sat.Longitude;
+            existing.Altitude = sat.Altitude;
+            existing.Time = sat.Time;
+            existing.Azimuth = sat.Azimuth;
+            existing.Elevation = sat.Elevation;
+            existing.Range = sat.Range;
+            existing.Doppler = sat.Doppler;
+        }
+
+        // Центр карты на наблюдателе, если нужно
+        if (Markers.Any())
+        {
+            var avgLat = Markers.Average(p => p.Lat);
+            var avgLng = Markers.Average(p => p.Lng);
+            Center = new PointLatLng(avgLat, avgLng);
+        }
     }
 
     /// <summary>
